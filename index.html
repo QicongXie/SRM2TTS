@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)https://QicongXie.github.io/SRM2TTS/ -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>MULTI-SPEAKER MULTI-STYLE TEXT-TO-SPEECH SYNTHESIS WITH SINGLE-SPEAKER SINGLE-STYLE TRAINING DATA SCENARIOS</title>
+<meta name="generator" content="Jekyll v3.9.0">
+<meta property="og:title" content="TODO: title">
+<meta property="og:locale" content="en_US">
+<link rel="canonical" href="https://QicongXie.github.io/SRM2TTS/">
+<meta property="og:url" content="https://QicongXie.github.io/SRM2TTS/">
+<meta name="twitter:card" content="summary">
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
+    <section class="page-header">
+    <!-- <h1 class="project-name">Demo PAGE</h1> -->
+    <!-- <h2 class="project-tagline"></h2> -->
+      
+      
+    </section>
+
+<section class="main-content">
+      <h1 id=""><center>MULTI-SPEAKER MULTI-STYLE TEXT-TO-SPEECH SYNTHESIS WITH SINGLE-SPEAKER SINGLE-STYLE TRAINING DATA SCENARIOS</center></h1>
+
+<center> Qicong Xie, Tao Li, Xinsheng Wang, Zhichao Wang, Lei Xie, Guoqiao Yu, Guanglu Wan  </center>
+<center> Northwestern Polytechnical University, Xi'an, China </center>
+<center> Xi’an Jiaotong University, Xi'an, China</center>
+<center>Meituan-Dianping Group, Beijing, China</center>
+
+<h2>0. Contents</h2>
+<ol>
+  <li><a href="#abstract">Abstract</a></li>
+  <li><a href="#Comparison">Demos -- Comparison with other methods</a></li>
+  <li><a href="#prediction">Demos -- The necessity of prosody components</a></li>
+  <li><a href="#control">Demos -- Speech synthesis by manual control</a></li>
+  <li><a href="#demo">Demos -- multi-speaker multi-style TTS with single-speaker single-style training data secnarios</a></li>
+</ol>
+
+<br><br>
+<h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+<p> In the existing cross-speaker style transfer task, a source speaker with multi-style recordings is necessary to provide the style for a target speaker. However, it is hard for one speaker to express all expected styles. In this paper, a more general task, which is to produce expressive speech by combining any styles and timbres from a multi-speaker corpus in which each speaker has a unique style, is proposed. To realize this task, a novel method is proposed. This method is a Tacotron2-based framework but with a fine-grained text-based prosody predicting module and a speaker identity controller. Experiments demonstrate that the proposed method can successfully express a style of one speaker with the timber of another speaker bypassing the dependency on a single speaker's multi-style corpus. Moreover, the explicit prosody features used in the prosody predicting module can increase the diversity of synthetic speech by adjusting the value of prosody features.
+</p>
+	<center><img src='raw/fig/newpp.png'></center>
+  <table frame=void rules=none><tr>
+    <td><img src='raw/fig/pp.png' border=0></td>
+    <td><img src='raw/fig/Prosody encoder(4).png' border=0></td>
+    </tr></table>
+<br><br>
+
+<h2>2. Demos -- Comparison with other methods<a name="Comparison"></a></h2>
+<h3>Corresponding to section 3.2 in our paper, below lists the samples that are synthesized for evaluations on the ability to generate the desired speaking style and timbre. We compared our proposed method with the Multi-R and PB on style similarity and speaker similarity.</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Style</strong></th>
+      <th style="text-align: center"><strong>Reference</strong></th>
+      <th style="text-align: center"><strong>Multi-R</strong></th>
+      <th style="text-align: center"><strong>PB</strong></th>
+      <th style="text-align: center"><strong>Proposed</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+	<tr>
+	  <td style="text-align: left" rowspan=2>Poetry</td>
+	  <td style="text-align: left" colspan=4> 
+      <!-- ref:钓罢归来不系船，江村月落正堪眠。<br>	 -->
+      Text: 独怜幽草涧边生，上有黄鹂深树鸣。(English: On the West Stream at Chuzhou Alone, I like the riverside where green grass grows And golden orioles sing amid the leafy trees.)</td>
+	</tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp1/ref_shannon_97-2.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp1/mref_shannon_99-2.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp1/pan_shannon_99-2.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp1/pro_shannon_99-2.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" rowspan=2>Game</td>
+      <td style="text-align: left" colspan=4>
+        <!-- ref:加布里埃尔，萨瓦特斯瑞。<br>	 -->
+        Text: 江苏省今年高考作文题目是。(English: The topic of Jiangsu Province’s college entrance examination composition this year is.)</td>
+    </tr>
+	<tr>
+    <td style="text-align: left"><audio src="raw/exp1/ref_tx_daqiao_804000287.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/mref_tx_daqiao_804000281.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pan_tx_daqiao_804000281.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pro_tx_daqiao_804000281.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" rowspan=2>Customer Service</td>
+      <td style="text-align: left" colspan=4>
+        <!-- ref:请问您能否在今晚八点前足额存入环款账户中呢？<br>	 -->
+        Text: 诶那跟您核对一下是，幺幺零四，七五零五幺对吧？(English: Oh, check it with you, one hundred four, seven five zero five, right?)</td>
+	</tr>
+	<tr>
+    <td style="text-align: left"><audio src="raw/exp1/ref_zn-06_228.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/mref_zn-06_2254.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pan_zn-06_2254.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pro_zn-06_2254.wav" controls="" preload=""></audio></td>
+    </tr>
+    <tr>
+      <td style="text-align: left" rowspan=2>Anchor</td>
+      <td style="text-align: left" colspan=4>
+        <!-- ref:于是阿万决定到月亮上把药要回来。<br>	 -->
+        Text: 菜园也浸泡在水里，栽种着的姜蒜都掺混在一起成了一汪味道特别的泥浆浓汤。(English: The vegetable garden is also immersed in water, and the planted ginger and garlic are mixed together to form a special muddy soup.)</td>
+	</tr>
+	<tr>
+    <td style="text-align: left"><audio src="raw/exp1/ref_db14_004996.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/mref_db14_004957.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pan_db14_004957.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pro_db14_004957.wav" controls="" preload=""></audio></td>
+    </tr>
+   <tr>
+      <td style="text-align: left" rowspan=2>Stroy</td>
+      <td style="text-align: left" colspan=4>
+        <!-- ref:乌普兰先朝南走，一直到了斯康耐省。<br>	 -->
+        Text: 就背起口袋，拄着棍子出门到那些日子过得比他富裕的省份去乞讨了。(English: He picked up his pockets and went out with a stick to begging in those provinces where the days were richer than him.)</td>
+	</tr>
+	<tr>
+    <td style="text-align: left"><audio src="raw/exp1/ref_db2_005002.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/mref_db2_005001.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pan_db2_005001.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp1/pro_db2_005001.wav" controls="" preload=""></audio></td>
+    </tr>   
+  </tbody>
+</table>
+
+
+
+<br><br>
+<h2>3. Demos -- The necessity of prosody components<a name="ablation"></a></h2>
+<h3>Corresponding to section 3.3 in our paper, below lists the samples synthesized by different variants with the same text as input.</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Style</strong></th>
+      <th style="text-align: center"><strong>Proposed</strong></th>
+      <th style="text-align: center"><strong>w/o duration</strong></th>
+      <th style="text-align: center"><strong>w/o pitch</strong></th>
+      <th style="text-align: center"><strong>w/o energy</strong></th>
+      <th style="text-align: center"><strong>w/o all</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left" rowspan=2>Poetry</td>
+      <td style="text-align: left" colspan=5>Text: 钓罢归来不系船,江村月落正堪眠。(English: Reverie in a Riverside Village Coming back from fishing, I don't fasten my boat; The moon sinks o'er riverside village-time to sleep.)</td>
+    </tr>
+      <tr>
+        <td style="text-align: left"><audio src="raw/exp2/pro_shannon_97-2.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp2/dd_shannon_97-2.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp2/ff_shannon_97-2.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp2/ee_shannon_97-2.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp2/aa_shannon_97-2.wav" controls="" preload=""></audio></td>
+      </tr>
+      <tr>
+        <td style="text-align: left" rowspan=2>Game</td>
+      <td style="text-align: left" colspan=5>Text: 预计在未来十年，会带来一百三十二亿平米的商品住房需求。(English: It is estimated that in the next ten years, it will bring 13.2 billion square meters of commercial housing demand.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp2/pro_tx_daqiao_804000296.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/dd_tx_daqiao_804000296.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ff_tx_daqiao_804000296.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ee_tx_daqiao_804000296.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/aa_tx_daqiao_804000296.wav" controls="" preload=""></audio></td>
+      </tr>
+      <tr>
+        <td style="text-align: left" rowspan=2>Customer Service</td>
+      <td style="text-align: left" colspan=5>Text: 请您在今晚八点前足额存入还款账户中可以吗？(English: Would you please deposit the full amount into the repayment account before eight o'clock this evening?)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp2/pro_zn-06_226.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/dd_zn-06_226.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ff_zn-06_226.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ee_zn-06_226.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/aa_zn-06_226.wav" controls="" preload=""></audio></td>
+      </tr>
+      <tr>
+        <td style="text-align: left" rowspan=2>Anchor</td>
+      <td style="text-align: left" colspan=5>Text: 所有的男子，都端平猎枪，拉满弩弦，握紧长刀，准备拼命。(English: All the men, with flat shotguns, full crossbow strings, clenched long knives, ready to work hard.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp2/pro_db14_004978.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/dur_db14_004978.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ff_db14_004978.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ee_db14_004978.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/aa_db14_004978.wav" controls="" preload=""></audio></td>
+      </tr>
+     <tr>
+        <td style="text-align: left" rowspan=2>Stroy</td>
+      <td style="text-align: left" colspan=5>Text: 就背起口袋，拄着棍子出门到那些日子过得比他富裕的省份去乞讨了。(English: He picked up his pocket and went out with a stick to beg in the provinces where he was better off.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp2/pro_db2_005001.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/dur_db2_005001.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ff_db2_005001.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/ee_db2_005001.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp2/aa_db2_005001.wav" controls="" preload=""></audio></td>
+      </tr>
+   
+  </tbody>
+</table>
+
+
+<h2>4. Demos -- EXP3 Emotional speech synthesis by manual control<a name="control"></a></h2>
+<h3>Corresponding to section 3.4 in our paper</h3>
+<p>Text: 清洁工阿姨一边打着自己的头，一边说“我好笨”、“我好笨”。(English: The cleaner aunt slapped her head while saying "I'm so stupid" and "I'm so stupid".)</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Emotion</strong></th>
+      <th style="text-align: center"><strong>Decrease by 20%</strong></th>
+      <th style="text-align: center"><strong>No adjustment </strong></th>
+      <th style="text-align: center"><strong>Increase by 20%</strong></th>
+      <th style="text-align: center"><strong>Figures</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Duration</td>
+      <td style="text-align: left"><audio src="raw/exp3/d08.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp3/1.0.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp3/d12.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><img src="raw/exp3/dur.png" height="100%" width="100%"></img></td>
+
+    </tr>
+    <tr>
+      <td style="text-align: left">Pitch</td>
+      <td style="text-align: left"><audio src="raw/exp3/f0.8.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp3/1.0.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp3/f1.2.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><img src="raw/exp3/f0_ff.png" height="100%" width="100%"></img></td>
+    </tr>
+      <tr>
+      <td style="text-align: left">Energy</td>
+      <td style="text-align: left"><audio src="raw/exp3/e0.8.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp3/1.0.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp3/e1.2.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><img src="raw/exp3/ene.png" height="100%" width="100%"></img></td>
+    </tr>
+   
+  </tbody>
+</table>
+
+
+<br><br>
+<h2>5. Demos -- multi-speaker multi-style TTS with single-speaker single-style training data secnarios<a name="demo"></a></h2>
+<h3>multi-speaker multi-style TTS with single-speaker single-style training data secnarios.</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Style\Speaker</strong></th>
+      <th style="text-align: center"><strong>Reading</strong></th>
+      <th style="text-align: center"><strong>Poetry</strong></th>
+      <th style="text-align: center"><strong>Game</strong></th>
+      <th style="text-align: center"><strong>Customer Service</strong></th>
+      <th style="text-align: center"><strong>Anchor</strong></th>
+      <th style="text-align: center"><strong>Stroy</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <tr>
+      <td style="text-align: left" rowspan=2>Reading</td>
+    <td style="text-align: left" colspan=6>Text: 放下电话才数分钟，母亲哑着嗓子的哭吼声已经响起。(English: Only a few minutes after putting down the phone, my mother's hoarse cry and roar had already sounded.)</td>
+  </tr>
+  <tr>
+    <td style="text-align: left"><audio src="raw/exp4/db1/005061.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp4/shannon/005061.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp4/tx/005061.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp4/zn/005061.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp4/db14/005061.wav" controls="" preload=""></audio></td>
+    <td style="text-align: left"><audio src="raw/exp4/db2/005061.wav" controls="" preload=""></audio></td>
+    </tr>
+
+
+    <tr>
+      <td style="text-align: left" rowspan=2>Poetry</td>
+      <td style="text-align: left" colspan=6>Text: 颠狂柳絮随风舞，轻薄桃花逐水流。(English: Wild willow catkins dance with the wind, frivolous peach blossoms flow.)</td>
+    </tr>
+      <tr>
+        <td style="text-align: left"><audio src="raw/exp4/db1/shannon_95-3.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp4/shannon/shannon_95-3.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp4/tx/shannon_95-3.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp4/zn/shannon_95-3.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp4/db14/shannon_95-3.wav" controls="" preload=""></audio></td>
+        <td style="text-align: left"><audio src="raw/exp4/db2/shannon_95-3.wav" controls="" preload=""></audio></td>
+      </tr>
+      <tr>
+        <td style="text-align: left" rowspan=2>Game</td>
+      <td style="text-align: left" colspan=6>Text: 热菜里的圣子不太好吃，淡而无味，一大半都扔掉了。(English: The razor cuisine in the hot dish was not very delicious and tasteless, and more than half of it was thrown away.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp4/db1/tx_daqiao_804000298.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/shannon/tx_daqiao_804000298.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/tx/tx_daqiao_804000298.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/zn/tx_daqiao_804000298.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db14/tx_daqiao_804000298.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db2/tx_daqiao_804000298.wav" controls="" preload=""></audio></td>
+      </tr>
+      <tr>
+        <td style="text-align: left" rowspan=2>Customer Service</td>
+      <td style="text-align: left" colspan=6>Text: 我们也不想给你带来任何不便，请您一定要在今晚八点前足额存入环款账户中。(English: We don't want to cause you any inconvenience. Please deposit the full amount into the ring account before 8 o'clock tonight.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp4/db1/zn-06_224.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/shannon/zn-06_224.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/tx/zn-06_224.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/zn/zn-06_224.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db14/zn-06_224.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db2/zn-06_224.wav" controls="" preload=""></audio></td>
+      </tr>
+      <tr>
+        <td style="text-align: left" rowspan=2>Anchor</td>
+      <td style="text-align: left" colspan=6>Text: 孟姜女整日以泪洗面，苦苦盼望丈夫早日回家。(English: Meng Jiangnu washed her face with tears all day, looking forward to her husband coming home as soon as possible.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp4/db1/db14_004993.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/shannon/db14_004993.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/tx/db14_004993.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/zn/db14_004993.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db14/db14_004993.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db2/db14_004993.wav" controls="" preload=""></audio></td>
+      </tr>
+     <tr>
+        <td style="text-align: left" rowspan=2>Stroy</td>
+      <td style="text-align: left" colspan=6>Text: 我不肯把任何一块肥沃的耕地施舍给乞丐。(English: I refuse to give any piece of fertile arable land to beggars.)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><audio src="raw/exp4/db1/db2_005014.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/shannon/db2_005014.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/tx/db2_005014.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/zn/db2_005014.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db14/db2_005014.wav" controls="" preload=""></audio></td>
+      <td style="text-align: left"><audio src="raw/exp4/db2/db2_005014.wav" controls="" preload=""></audio></td>
+      </tr>
+
+  </tbody>
+</table>
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub Pages</a>.</span>
+      </footer>
+    </section>
+</body></html>
